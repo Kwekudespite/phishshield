@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PhishShield</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h1>🛡️ PhishShield</h1>
+<p>Real-Time Cyber Threat Detection System</p>
+
+<form method="POST">
+
+    <h3>🔍 URL Scanner</h3>
+    <input type="text" name="url" placeholder="Enter URL">
+
+    <h3>📧 Email Scanner</h3>
+    <textarea name="email" placeholder="Paste suspicious email"></textarea>
+
+    <h3>🔑 Password Strength Checker</h3>
+    <input type="text" name="password" placeholder="Enter password">
+
+    <br><br>
+    <button type="submit">Analyze</button>
+</form>
+
+
+
+<!-- ================= RESULTS ================= -->
+
+<h2>Results:</h2>
+
+{% set url_val = url_score|default(0) %}
+{% set email_val = email_score|default(0) %}
+{% set password_val = password_score|default(0) %}
+
+<h3>URL Risk Score: {{ url_val }}%</h3>
+<div class="progress">
+    <div class="progress-bar" id="url-bar" style="width:0%"></div>
+</div>
+
+<h3>Email Risk Score: {{ email_val }}%</h3>
+<div class="progress">
+    <div class="progress-bar" id="email-bar" style="width:0%"></div>
+</div>
+
+<h3>Password Strength: {{ password_val }}%</h3>
+<div class="progress">
+    <div class="progress-bar" id="password-bar" style="width:0%"></div>
+</div>
+
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const urlBar = document.getElementById("url-bar");
+    const emailBar = document.getElementById("email-bar");
+    const passwordBar = document.getElementById("password-bar");
+
+    if(urlBar){
+        urlBar.style.width = "{{ url_val }}%";
+    }
+
+    if(emailBar){
+        emailBar.style.width = "{{ email_val }}%";
+    }
+
+    if(passwordBar){
+        passwordBar.style.width = "{{ password_val }}%";
+    }
+
+});
+</script>
+
+
+</body>
+</html>
